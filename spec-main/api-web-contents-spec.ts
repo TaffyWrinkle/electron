@@ -112,26 +112,26 @@ describe('webContents module', () => {
       expect(() => {
         // @ts-ignore this line is intentionally incorrect
         w.webContents.print(true)
-      }).to.throw('webContents.print(): Invalid print settings specified.')
+      }).to.throw('Invalid print settings specified')
     })
 
     it('throws when an invalid callback is passed', () => {
       expect(() => {
         // @ts-ignore this line is intentionally incorrect
         w.webContents.print({}, true)
-      }).to.throw('webContents.print(): Invalid optional callback provided.')
+      }).to.throw('Invalid optional callback provided')
     })
 
     ifit(process.platform !== 'linux')('throws when an invalid deviceName is passed', () => {
       expect(() => {
-        w.webContents.print({ deviceName: 'i-am-a-nonexistent-printer' }, () => {})
-      }).to.throw('webContents.print(): Invalid deviceName provided.')
+        w.webContents.print({ deviceName: 'i-am-a-nonexistent-printer' })
+      }).to.throw('Invalid deviceName provided')
     })
 
     it('throws when an invalid pageSize is passed', () => {
       expect(() => {
         // @ts-ignore this line is intentionally incorrect
-        w.webContents.print({ pageSize: 'i-am-a-bad-pagesize' }, () => {})
+        w.webContents.print({ pageSize: 'i-am-a-bad-pagesize' })
       }).to.throw('Unsupported pageSize: i-am-a-bad-pagesize')
     })
 
@@ -1460,8 +1460,8 @@ describe('webContents module', () => {
         landscape: [],
         pageRanges: { 'oops': 'im-not-the-right-key' },
         headerFooter: '123',
-        printSelectionOnly: 1,
-        printBackground: 2,
+        shouldPrintSelectionOnly: 1,
+        shouldPrintBackgrounds: 2,
         pageSize: 'IAmAPageSize'
       }
 

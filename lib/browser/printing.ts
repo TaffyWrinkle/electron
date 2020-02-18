@@ -92,6 +92,11 @@ const defaultPrintSettings: PrintSettings = {
 }
 
 export function updatePrintSettings (settings: PrintSettings, type: PrintType) {
+  if (typeof settings !== 'object') {
+    const error = new Error('Invalid print settings specified')
+    return { error }
+  }
+
   const printSettings: PrintSettings = { ...defaultPrintSettings }
 
   settings.printToPDF = type === PrintType.PDF
@@ -129,7 +134,7 @@ export function updatePrintSettings (settings: PrintSettings, type: PrintType) {
 
   // See ColorModel in //printing/print_job_constants.h.
   // Default is `true` -> 2 (color) and `false` -> 1 (gray)
-  if (!settings.color !== undefined) {
+  if (settings.color !== undefined) {
     if (typeof settings.color !== 'boolean') {
       const error = new Error('color must be a Boolean')
       return { error }
@@ -157,10 +162,13 @@ export function updatePrintSettings (settings: PrintSettings, type: PrintType) {
         const error = new Error(`marginsType 'custom' must define 'top', 'bottom', 'left', and 'right'.`)
         return { error }
       }
-      printSettings.top = margins.top
-      printSettings.bottom = margins.bottom
-      printSettings.left = margins.left
-      printSettings.right = margins.right
+
+      printSettings.marginsCustom = {
+        marginTop: margins.top!,
+        marginBottom: margins.bottom!,
+        marginLeft: margins.left!,
+        marginRight: margins.right!
+      }
     } else {
       printSettings.marginsType = marginValues[margins.marginType]
     }

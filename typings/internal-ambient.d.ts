@@ -97,6 +97,12 @@ interface MarginType {
 
 type PageRange = {from: number, to: number};
 type Size = { width: number, height: number};
+type CustomMargins = { 
+  marginTop: number,
+  marginBottom: number,
+  marginLeft: number,
+  marginRight: number
+};
 
 interface PrintSettings {
   // Sent to Chromium
@@ -114,6 +120,7 @@ interface PrintSettings {
   landscape: boolean;
   left?: number;
   marginsType: 0 | 1 | 2 | 3;
+  marginsCustom?: CustomMargins;
   mediaSize: PageSize;
   pageRanges?: PageRange[];
   pagesPerSheet: 1,
